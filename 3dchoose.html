@@ -1,0 +1,194 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="main/kinetic-v2.3.0.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="main/jquery.mobile-1.0.min.js"></script>
+<script type="text/javascript" src="main/drag.js"></script>
+<script type="text/javascript" src="main/main.js"></script>
+<link type="text/css" href="css/main.css" type="text/css" rel="stylesheet" />
+<title>圣诞礼物</title>
+
+<script type="text/javascript" src="main/Three.js"></script> 
+<script type="text/javascript" src="main/RequestAnimationFrame.js"></script>
+<script>
+
+
+var num = 0;
+var isMove = false;
+
+var container, stats;
+var camera, scene, renderer;
+var dae, skin;
+
+var fov = 70;
+
+var loader = new THREE.ColladaLoader();
+
+
+function init3d() {
+	container = document.getElementById('3dcanvas');
+	//document.body.appendChild(container);
+	camera = new THREE.PerspectiveCamera(fov, window.innerWidth
+			/ window.innerHeight, 1, 2000);
+	camera.position.x=0;
+	camera.position.z=5;
+	camera.position.y=-10;
+	scene = new THREE.Scene();
+	// Add the COLLADA
+	scene.add(dae);
+	// Lights
+	renderer = new THREE.WebGLRenderer();
+	renderer.setSize(500, 500);
+	container.appendChild(renderer.domElement);
+
+	//console.log(renderer.domElement);
+	//alert(renderer.domElement)
+
+	document.addEventListener('mousewheel', onDocumentMouseWheel, false);
+	document.addEventListener('DOMMouseScroll', onDocumentMouseWheel, false);
+	
+}
+
+
+function onDocumentMouseWheel(event) {
+	// WebKit
+	if (event.wheelDeltaY) {
+		fov -= event.wheelDeltaY * 0.05;
+		// Opera / Explorer 9
+	} else if (event.wheelDelta) {
+		fov -= event.wheelDelta * 0.05;
+		// Firefox
+
+	} else if (event.detail) {
+
+		fov += event.detail * 1.0;
+	}
+	camera.projectionMatrix = THREE.Matrix4.makePerspective(fov,
+			window.innerWidth / window.innerHeight, 1, 1100);
+	render();
+}
+var t = 0;
+function animate() {
+	requestAnimationFrame(animate);
+	
+	render();
+	//stats.update();
+}
+
+function render() {
+
+	var time = new Date().getTime() * 0.0005;
+
+			if ( dae ) dae.rotation.z -= 0.01;
+				 camera.lookAt(dae.position);
+			renderer.render( scene, camera );
+}
+
+
+window.onload = function(){
+	showPoints();
+	function goRight(){
+		if(isMove){
+			return;
+		}
+		if(num <= 0){
+			return;
+		}
+		isMove = true;
+		$(".choose .choose_tree .tree ul").animate({marginLeft:"+=420"}, {complete:function(){
+			num--;
+			showPoints();
+			isMove = false;
+		}});
+	}
+
+	function goLeft(){
+		if(isMove){
+			return;
+		}
+		if(num >= $('.choose .choose_tree li').length-1){
+			return;
+		}
+		isMove = true;
+		$(".choose .choose_tree .tree ul").animate({marginLeft:"-=420"}, {complete:function(){
+			num++;
+			showPoints();
+			isMove = false;
+		}});
+	}
+
+	$('.choose .choose_tree .left').click(goRight);
+
+	$('.choose .choose_tree .right').click(goLeft);
+
+	$('.choose .choose_tree .tree').bind( "swiperight", goRight);
+
+	$('.choose .choose_tree .tree').bind( "swipeleft", goLeft);
+
+	$('.choose .choose_tree .left').bind( "touchstart", goRight);
+
+	$('.choose .choose_tree .right').bind( "touchstart", goLeft);
+
+	function showPoints(){
+		var total = $('.choose .choose_tree li').length;
+		var arrayTmp = [];
+		for(var i =0 ;i<total;i++){
+			if(num == i){
+				arrayTmp.push('<img src="images/choose/point_white.png">');
+			}
+			else{
+				arrayTmp.push('<img src="images/choose/point_yellow.png">');
+			}
+		}
+		var str = arrayTmp.join('');
+
+		$('.points').html(str);
+	}
+
+	
+
+}
+</script>
+</head>
+<body >
+<div class="choose">
+	<div class="choose_tree">
+		<div class="left"><img src="images/choose/left.png"></div>
+		<div class="tree" onclick="window.location.href = 'editor.html';">
+		<ul>
+			<li><img src="images/choose/tree.png"></li>
+			<li>
+				<video width="311" height="398" autoplay loop="loop">
+					<source src="c_tree_a.mp4" type="video/mp4" />
+				</video>				
+			</li>
+			<li><div id="3dcanvas"></div></li>
+			<li><img src="images/choose/tree.png"></li>
+			<li><img src="images/choose/tree.png"></li>
+		</ul>
+		</div>
+		<div class="right"><img src="images/choose/right.png"></div>
+	</div>
+	<div class="points"></div>
+</div>
+<script>
+$("video").each(function(){
+	$(this)[0].play();
+})
+
+loader.load('art3d/c_tree_a.dae', function colladaReady(collada) {
+	dae = collada.scene;
+	skin = collada.skins[0];
+	dae.scale.x = dae.scale.y = dae.scale.z = 0.011;
+
+	dae.updateMatrix();
+	init3d();
+	animate();
+});
+
+</script>
+
+</body>
+</html>

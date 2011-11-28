@@ -1,0 +1,202 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+    <title>Christmas Gift</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="main/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main/jCanvaScript.1.5.11.js" type="text/javascript"></script>
+    <link type="text/css" href="css/main.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript">
+            function SliptElement() {
+                this.x = 0;
+                this.y = 0;
+                this.width = 0;
+                this.height = 0;
+                this.Index = 0;
+            }
+
+            function SliptRectElement() {
+                this.x = 0;
+                this.y = 0;
+                this.width = 0;
+                this.height = 0;
+                this.Index = 0;
+                this.have = false;
+                this.match = false;
+            }
+
+            var split_Imags = [];
+            var split_Rect = [];
+            var rect1_have = false;
+            var rect2_have = false;
+            var rect3_have = false;
+            var rect4_have = false;
+
+            $(document).ready(function () {
+                jc.start("canvas", true);
+                var img = new Image();
+                img.src = "images/background.png";
+                img.onload = function () {
+                    jc.image(img, 0, 0);
+
+                    SliptImage(500, 375, 3, 2);
+//                    SliptRect(165 + 110, 200, 500, 375, 3, 2);
+                    SliptRect(165 + 200, 200, 93*3, 106*2, 3, 2);
+                    for (var i = 0; i < split_Rect.length; i++) {
+                        RectPuzzle(split_Rect[i].x,
+                                    split_Rect[i].y,
+                                    split_Rect[i].width,
+                                    split_Rect[i].height,
+                                    split_Rect[i].have,
+                                    split_Rect[i].Index);
+                    }
+
+                    var img_operation = new Image();
+                    img_operation.src = "images/opt.png";
+                    img_operation.onload = function () {
+
+                        var img_operate = new Image();
+                        img_operate.src = "images/item.png";
+
+                        img_operate.onload = function () {
+
+                            var img_big = new Image();
+                            img_big.src = localStorage.gift;
+                            img_big.onload = function () {
+
+                                //var img_splittemp = jc.image(img_big, 0, 874, 140, 140);
+
+                                var jc_operation = jc.image(img_operation, 0, 600);
+
+                                var jc_operation = jc.image(img_operate, 90, 620);
+
+                                var jc_operation = jc.image(img_operate, 90 + 1 * 150, 620);
+
+                                var jc_operation = jc.image(img_operate, 90 + 2 * 150, 620);
+
+                                var jc_operation = jc.image(img_operate, 90 + 3 * 150, 620);
+
+                                var jc_operation = jc.image(img_operate, 90 + 4 * 150, 620);
+
+                                var jc_operation = jc.image(img_operate, 90 + 5 * 150, 620);
+
+                                for (var i = 0; i < split_Imags.length; i++) {
+                                    var widthIndex = Math.floor(Math.random() * (300) + 500);
+                                    var heightIndex = Math.floor(Math.random() * (200) + 450);
+//                                  SliptPuzzle(img_big, widthIndex, heightIndex, split_Imags[i].width, split_Imags[i].height, split_Imags[i].x, split_Imags[i].y, split_Imags[i].width, split_Imags[i].height, split_Imags[i].Index);
+                                    SliptPuzzle(img_big, 90+i*150, 620, 93, 106, split_Imags[i].x, split_Imags[i].y, split_Imags[i].width, split_Imags[i].height, split_Imags[i].Index);
+                              
+                               }
+                            }
+                        }
+                    }
+                }
+            });
+
+
+            function RectPuzzle(x, y, width, height, mark, layer_id) {
+                var points = [  [x, y],
+                                [x + width, y],
+                                [x + width, y + height],
+                                [x, y + height],
+                                [x, y]];
+
+                var rect = jc.line({ points: points, color: '#FFFFFF', fill: 0 })
+                                                     .lineStyle({ cap: 'round', join: 'round', lineWidth: 3 })
+                                                     .layer("rect" + layer_id);
+                rect.droppable(function (draggableObjct) {
+                    if (!mark) {
+                        draggableObjct.translateTo(x, y);
+                        draggableObjct.objs[1].visible(false);
+                        var temp1 = rect.optns.layer.id.toString().substring(rect.optns.layer.id.toString().length - 1);
+                        var temp2 = draggableObjct.optns.id.toString().substring(draggableObjct.optns.id.toString().length - 1);
+                        setTimeout(function () { 
+                             if (temp1 == temp2) {
+                                split_Rect[temp1].match = true;
+                                CheckOver();
+                            }                       
+                        },500);
+                        mark = true;
+                        draggableObjct.draggable(function () {
+                            draggableObjct.up('top');
+                            draggableObjct.objs[1].visible(true);
+                            mark = false;
+                        });
+                    }
+
+                });
+            }
+
+            function SliptPuzzle(img, x, y, width, height, sx, sy, swidth, sheight, layer_id) {
+
+                var img_splittemp1 = jc.image(img, x, y, width, height, sx, sy, swidth, sheight).layer("test" + layer_id);
+                var points = [[x, y], [x + width, y], [x + width, y + height], [x, y + height], [x, y]];
+                var _jc2 = jc.line({ points: points, color: '#FCE000', fill: 0 })
+                                 .lineStyle({ cap: 'round', join: 'round', lineWidth: 5 })
+                                 .visible(true)
+                                 .layer("test" + layer_id);
+                jc.layer("test" + layer_id).draggable(function () {
+                    jc.layer("test" + layer_id).up('top');
+                    jc.layer("test" + layer_id).objs[1].visible(true);
+                });
+                jc.layer("test" + layer_id).mouseup(function () {
+                    jc.layer("test" + layer_id).objs[1].visible(true);
+                });
+
+            }
+
+            function SliptImage(width, height, rank_x, rank_y) {
+                var k = 0;
+                for (var i = 0; i < rank_x; i++) {
+                    for (var j = 0; j < rank_y; j++) {
+                        var temp = new SliptElement();
+                        temp.x = i * (width / rank_x);
+                        temp.y = j * (height / rank_y);
+                        temp.width = width / rank_x;
+                        temp.height = height / rank_y;
+                        temp.Index = k;
+                        split_Imags.push(temp);
+                        k++;
+                    }
+                }
+            }
+
+            function SliptRect(x, y, width, height, rank_x, rank_y) {
+                var k = 0;
+                for (var i = 0; i < rank_x; i++) {
+                    for (var j = 0; j < rank_y; j++) {
+                        var temp = new SliptRectElement();
+                        temp.x = x + i * (width / rank_x);
+                        temp.y = y + j * (height / rank_y);
+                        temp.width = width / rank_x;
+                        temp.height = height / rank_y;
+                        temp.Index = k;
+                        split_Rect.push(temp);
+                        k++;
+                    }
+                }
+            }
+
+            function CheckOver() {
+                var isover = true;
+                for (var i = 0; i < split_Rect.length; i++) {
+                    if (!split_Rect[i].match) {
+                        isover = false;
+                    }
+                }
+
+                if (isover) {
+                    alert("Congradulations!!");
+                }
+                else {
+                    return;
+                }
+            }
+    </script>
+</head>
+<body>
+<div class="index">
+    <canvas id="canvas" width="1043px" height="793px"></canvas>
+</div>
+</body>
+</html>

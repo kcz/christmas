@@ -1,0 +1,247 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+    <title>Christmas Gift</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="main/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main/jCanvaScript.1.5.11.js" type="text/javascript"></script>
+    <link type="text/css" href="css/main.css" type="text/css" rel="stylesheet" />
+        <script type="text/javascript">
+
+            var split_Rect = [];
+            var split_Imags = [];
+            var rect1_have = false;
+            var rect2_have = false;
+            var rect3_have = false;
+            var rect4_have = false;
+
+            function SliptElement() {
+                this.x = 0;
+                this.y = 0;
+                this.width = 0;
+                this.height = 0;
+                this.Index = 0;
+            }
+
+            $(document).ready(function () {
+                jc.start("canvas", true);
+                var img = new Image();
+                img.src = "images/background.png";
+                img.onload = function () {
+                    jc.image(img, 0, 0);
+
+                    var img_big = new Image();
+                    //img_big.src = "images/bigImage.png";
+                    img_big.src = localStorage.gift;
+                    img_big.onload = function () {
+
+                        var img_btn4 = new Image();
+                        img_btn4.src = "images/4cell.png";
+
+                        img_btn4.onload = function () {
+
+                            var img_btn6 = new Image();
+                            img_btn6.src = "images/6cell.png";
+
+                            img_btn6.onload = function () {
+
+                                var jc_splittemp = jc.image(img_big, 165 + 110, 200, 500, 375);
+
+                                var points = [[165 + 110, 200], [165 + 100 + 500, 200], [165 + 110 + 500, 200 + 375], [165 + 110, 200 + 375], [165 + 110, 200]];
+
+                                var _jc33 = jc.line({ points: points, color: '#FFFFFF', fill: 0 })
+                                     .lineStyle({ cap: 'round', join: 'round', lineWidth: 5 })
+
+
+                                var jc_btn4 = jc.image(img_btn4, 220 + 80, 200 - 60);
+
+                                var jc_btn6 = jc.image(img_btn6, 220 + 20 + 290 + 20, 200 - 60);
+
+                                jc_btn4.click(function () {
+                                    jc_splittemp.del();
+                                    _jc33.del();
+                                    jc_btn4.del();
+                                    jc_btn6.del();
+                                    var Move_Imags = [];
+                                    SliptRect(165 + 110, 200, img_big.width, img_big.height, 2, 2);
+                                    SliptImage(img_big.width, img_big.height, 2, 2);
+
+                                    for (var i = 0; i < split_Imags.length; i++) {
+                                        var jc_temp = jc.image(img_big,
+                                                              split_Rect[i].x,
+                                                              split_Rect[i].y,
+                                                              split_Rect[i].width,
+                                                              split_Rect[i].height,
+                                                              split_Imags[i].x,
+                                                              split_Imags[i].y,
+                                                              split_Imags[i].width,
+                                                              split_Imags[i].height).layer('test' + i);
+                                        var points = [[split_Rect[i].x, split_Rect[i].y],
+                                                      [split_Rect[i].x + split_Rect[i].width, split_Rect[i].y],
+                                                      [split_Rect[i].x + split_Rect[i].width, split_Rect[i].y + split_Rect[i].height],
+                                                      [split_Rect[i].x, split_Rect[i].y + split_Rect[i].height],
+                                                      [split_Rect[i].x, split_Rect[i].y]];
+
+                                        var _jc2 = jc.line({ points: points, color: '#FFFFFF', fill: 0 })
+                                                     .lineStyle({ cap: 'round', join: 'round', lineWidth: 5 })
+                                                     .layer('test' + i);
+                                        Move_Imags.push(jc.layer('test' + i));
+                                    }
+
+                                    var ainimition1 = setInterval(function () {
+                                        var point = Move_Imags[0].position();
+                                        Move_Imags[0].translateTo(point.x - 50, point.y - 50);
+                                    }, 250);
+
+                                    var ainimition2 = setInterval(function () {
+                                        var point = Move_Imags[1].position();
+                                        Move_Imags[1].translateTo(point.x - 50, point.y + 50);
+                                    }, 250);
+
+                                    var ainimition3 = setInterval(function () {
+                                        var point = Move_Imags[2].position();
+                                        Move_Imags[2].translateTo(point.x + 50, point.y - 50);
+                                    }, 250);
+
+                                    var ainimition4 = setInterval(function () {
+                                        var point = Move_Imags[3].position();
+                                        Move_Imags[3].translateTo(point.x + 50, point.y + 50);
+                                    }, 250);
+
+                                    setTimeout(function () {
+                                        clearInterval(ainimition1);
+                                        clearInterval(ainimition2);
+                                        clearInterval(ainimition3);
+                                        clearInterval(ainimition4);
+                                    }, 1000);
+                                });
+
+                                jc_btn6.click(function () {
+                                    jc_splittemp.del();
+                                    _jc33.del();
+                                    jc_btn4.del();
+                                    jc_btn6.del();
+                                    var Move_Imags = [];
+                                    SliptRect(165 + 110, 200, img_big.width, img_big.height, 3, 2);
+                                    SliptImage(img_big.width, img_big.height, 3, 2);
+
+                                    for (var i = 0; i < split_Imags.length; i++) {
+                                        var jc_temp = jc.image(img_big,
+                                                              split_Rect[i].x,
+                                                              split_Rect[i].y,
+                                                              split_Rect[i].width,
+                                                              split_Rect[i].height,
+                                                              split_Imags[i].x,
+                                                              split_Imags[i].y,
+                                                              split_Imags[i].width,
+                                                              split_Imags[i].height).layer('test' + i);
+                                        var points = [[split_Rect[i].x, split_Rect[i].y],
+                                                      [split_Rect[i].x + split_Rect[i].width, split_Rect[i].y],
+                                                      [split_Rect[i].x + split_Rect[i].width, split_Rect[i].y + split_Rect[i].height],
+                                                      [split_Rect[i].x, split_Rect[i].y + split_Rect[i].height],
+                                                      [split_Rect[i].x, split_Rect[i].y]];
+
+                                        var _jc2 = jc.line({ points: points, color: '#FFFFFF', fill: 0 })
+                                                     .lineStyle({ cap: 'round', join: 'round', lineWidth: 5 })
+                                                     .layer('test' + i);
+                                        Move_Imags.push(jc.layer('test' + i));
+                                    }
+
+                                    var ainimition1 = setInterval(function () {
+                                        var point = Move_Imags[0].position();
+                                        Move_Imags[0].translateTo(point.x - 50, point.y - 50);
+                                    }, 250);
+
+                                    var ainimition2 = setInterval(function () {
+                                        var point = Move_Imags[1].position();
+                                        Move_Imags[1].translateTo(point.x - 50, point.y + 50);
+                                    }, 250);
+
+                                    var ainimition3 = setInterval(function () {
+                                        var point = Move_Imags[2].position();
+                                        Move_Imags[2].translateTo(point.x, point.y - 50);
+                                    }, 250);
+
+                                    var ainimition4 = setInterval(function () {
+                                        var point = Move_Imags[3].position();
+                                        Move_Imags[3].translateTo(point.x, point.y + 50);
+                                    }, 250);
+
+                                    var ainimition5 = setInterval(function () {
+                                        var point = Move_Imags[4].position();
+                                        Move_Imags[4].translateTo(point.x + 50, point.y - 50);
+                                    }, 250);
+
+                                    var ainimition6 = setInterval(function () {
+                                        var point = Move_Imags[5].position();
+                                        Move_Imags[5].translateTo(point.x + 50, point.y + 50);
+                                    }, 250);
+
+                                    setTimeout(function () {
+                                        clearInterval(ainimition1);
+                                        clearInterval(ainimition2);
+                                        clearInterval(ainimition3);
+                                        clearInterval(ainimition4);
+                                        clearInterval(ainimition5);
+                                        clearInterval(ainimition6);
+                                    }, 1000);
+                                });
+                            }
+                        }
+                    };
+                }
+            });
+
+            function SliptRect(x, y, width, height, rank_x, rank_y) {
+                var k = 0;
+                for (var i = 0; i < rank_x; i++) {
+                    for (var j = 0; j < rank_y; j++) {
+                        var temp = new SliptElement();
+                        temp.x = x + i * (width / rank_x);
+                        temp.y = y + j * (height / rank_y);
+                        temp.width = width / rank_x;
+                        temp.height = height / rank_y;
+                        temp.Index = k;
+                        split_Rect.push(temp);
+                        k++;
+                    }
+                }
+            }
+
+            function SliptImage(width, height, rank_x, rank_y) {
+                var k = 0;
+                for (var i = 0; i < rank_x; i++) {
+                    for (var j = 0; j < rank_y; j++) {
+                        var temp = new SliptElement();
+                        temp.x = i * (width / rank_x);
+                        temp.y = j * (height / rank_y);
+                        temp.width = width / rank_x;
+                        temp.height = height / rank_y;
+                        temp.Index = k;
+                        split_Imags.push(temp);
+                        k++;
+                    }
+                }
+            }
+
+            function Animition(MoveObjct, i) {
+                setInterval(function () {
+                    var point = MoveObjct.position();
+                    if ((i % 2) == 1) {
+                        MoveObjct.translateTo(point.x - 50, point.y - 50);
+                    }
+                    else {
+                        MoveObjct.translateTo(point.x + 50, point.y + 50);
+                    }
+                }, 200);
+            }
+        </script>
+
+</head>
+<body>
+<a style="position:absolute; left:0; top:0; display:block; width:150px; height:100px;font-size:24px;z-index:20000;text-decoration:none;color:#fff;" href="index.html">Home Page</a>
+<div class="index">
+    <canvas id="canvas" width="1043px" height="793px"></canvas>
+</div>
+</body>
+</html>
