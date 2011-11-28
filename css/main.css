@@ -1,0 +1,21 @@
+body,p,ul,li,div{margin:0;padding:0;list-style:none;}
+
+body{background:url(../images/bg.png);}
+
+.index,.choose,.editor {height:793px;width:1034px;margin:0 auto;padding:1px;background:url(../images/background.png) left top no-repeat;position:relative}
+.index .inside{background:url(../images/index/background_tree.png);width:413px;height:551px;margin:130px auto 0 auto}
+.index .function{width:660px;height:240px;position:absolute;margin:-370px 0 0 200px}
+.index .function div{float:left;margin:0 20px;width:180px;height:240px;text-align:center;cursor:pointer}
+
+.choose .choose_tree{width:600px;margin:130px auto 0 auto;height:400px;}
+.choose .choose_tree .left,.choose .choose_tree .right{padding:200px 20px 0 20px;}
+.choose .choose_tree div{float:left;}
+.choose .points{text-align:center;margin-top:10px}
+.choose .choose_tree .tree {width:420px;height:410px;overflow:hidden}
+.choose .choose_tree .tree ul{width:32000px;}
+.choose .choose_tree .tree li{float:left;width:420px;text-align:center}
+
+.choose .points img{margin:0 3px}
+
+.ui-loader{display:none}
+

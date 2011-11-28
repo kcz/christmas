@@ -1,97 +1,36 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head>
-  <meta charset='utf-8'>
-
-  <title>kcz/christmas @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #70db86;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #8f2479; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #8f2479; }
-    h3 { text-align: center; color: #8f2479; }
-    a { color: #8f2479; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="main/kinetic-v2.3.0.js"></script>
+<script src="main/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="main/drag.js"></script>
+<script type="text/javascript" src="main/main.js"></script>
+<link type="text/css" href="css/main.css" type="text/css" rel="stylesheet" />
+<title>圣诞礼物</title>
 </head>
-
 <body>
-  <a href="https://github.com/kcz/christmas"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<div class="index">
+	<div class="inside">
+		
+	</div>
+	<div class="function">
+		<div class="byself" onclick="chooseInit()"><img src="images/index/by_self_icon.png"><img src="images/index/by_self.png"></div>
+		<div class="pic" onclick="location.href='webgl/index.html'"><img src="images/index/pic_icon.png"><img src="images/index/pic.png"></div>
+		<div class="gift" onclick="window.location.href='split.html'"><img src="images/index/gift_icon.png"><img src="images/index/gift.png"></div>
+	</div>
+</div>
 
-  <div id="container">
-
-    <div class="download">
-      <a href="https://github.com/kcz/christmas/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/kcz/christmas/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="https://github.com/kcz/christmas">christmas</a>
-      <span class="small">by <a href="https://github.com/kcz">kcz</a></span></h1>
-
-    <div class="description">
-      Our Team work in Code Jam
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-      <h2>Authors</h2>
-      <p>kcz (xzkcz@163.com)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p> (xzkcz@163.com)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/kcz/christmas/zipball/master">zip</a> or
-      <a href="https://github.com/kcz/christmas/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/kcz/christmas</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/kcz/christmas">kcz/christmas</a>
-    </div>
-
-  </div>
-
-<script type=\"text/javascript\">
-var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");
-document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
-</script>
-<script type=\"text/javascript\">
-try {
-var pageTracker = _gat._getTracker("UA-27338747-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>"
+<div style="display:none">
+	<img src="images/choose/left.png" />
+	<img src="images/choose/right.png" />
+	<img src="images/choose/tree.png" />
+	
+	<img src="new_static/gift/gift01.png" style="display:none;" />
+	<img src="new_static/gift/gift02.png" style="display:none;" />
+	<img src="new_static/gift/gift03.png" style="display:none;" />
+	<img src="new_static/gift/gift04.png" style="display:none;" />
+	<img src="new_static/gift/gift05.png" style="display:none;" />	
+</div>
 </body>
 </html>
